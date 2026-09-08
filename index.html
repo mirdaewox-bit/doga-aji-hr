@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="hr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#111111" />
+  <title>Događaji HR</title>
+  <link rel="manifest" href="manifest.json" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div>
+      <div class="eyebrow">Događaji HR</div>
+      <h1>Nemoj saznati prekasno.</h1>
+    </div>
+    <button id="locateBtn" class="icon-btn" aria-label="Pronađi moju lokaciju">📍</button>
+  </header>
+
+  <main>
+    <section class="hero card">
+      <div>
+        <p class="muted" id="locationText">Lokacija nije uključena</p>
+        <h2>Kamo ovih dana?</h2>
+        <p>Tradicionalna događanja, sajmovi, gastro, koncerti i lokalne manifestacije — na vrijeme i blizu tebe.</p>
+      </div>
+      <div class="row gap">
+        <button id="upcomingBtn" class="primary">Sljedećih 30 dana</button>
+        <button id="weekendBtn" class="secondary">Ovaj vikend</button>
+        <button id="allBtn" class="secondary">Sve</button>
+      </div>
+    </section>
+
+    <section class="controls card">
+      <label class="full">
+        Pretraži
+        <input id="searchInput" type="search" placeholder="npr. Vinkovci, alka, gastro…" />
+      </label>
+      <label>
+        Udaljenost
+        <select id="radiusSelect">
+          <option value="25">25 km</option>
+          <option value="50" selected>50 km</option>
+          <option value="100">100 km</option>
+          <option value="200">200 km</option>
+          <option value="9999">Cijela Hrvatska</option>
+        </select>
+      </label>
+      <label>
+        Vrsta
+        <select id="typeSelect">
+          <option value="all">Sve</option>
+          <option value="tradicija">Tradicija</option>
+          <option value="gastro">Gastro</option>
+          <option value="glazba">Glazba</option>
+          <option value="sajam">Sajam</option>
+          <option value="karneval">Karneval</option>
+          <option value="manifestacija">Manifestacija</option>
+        </select>
+      </label>
+    </section>
+
+    <section class="section-head">
+      <h2 id="listTitle">Sljedećih 30 dana</h2>
+      <span id="countBadge" class="badge">0</span>
+    </section>
+    <section id="eventsList" class="events"></section>
+
+    <section class="section-head top-space">
+      <h2>Gdje izaći?</h2>
+    </section>
+    <section class="card night-card">
+      <div>
+        <strong>Drugi dio aplikacije</strong>
+        <p class="muted">Kad si u nekom gradu, ovdje ćemo nuditi mali izbor aktualnih pubova, live glazbe i izlazaka — bez zatrpavanja.</p>
+      </div>
+      <button class="secondary" disabled>Uskoro</button>
+    </section>
+  </main>
+
+  <nav class="bottom-nav">
+    <button data-view="home" class="active">🏠<span>Početna</span></button>
+    <button data-view="saved">🔔<span>Spremljeno</span></button>
+    <button data-view="about">ℹ️<span>O appu</span></button>
+  </nav>
+
+  <dialog id="detailDialog">
+    <button id="closeDialog" class="close">✕</button>
+    <div id="detailContent"></div>
+  </dialog>
+
+  <script src="app.js"></script>
+</body>
+</html>
