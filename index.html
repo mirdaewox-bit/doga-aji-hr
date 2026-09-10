@@ -241,7 +241,7 @@ dialog#dlg::backdrop{background:rgba(20,24,26,.58);backdrop-filter:blur(3px)}
 @media(max-width:420px){.scroll-arrows{right:3px}.scroll-arrows button{width:34px;height:34px}}
 .photo-credit{margin-top:8px;opacity:.82;font-size:10px}
 
-/* V25.1 — tappable cards + stronger image titles + immersive detail */
+/* V25.2 — tappable cards + stronger image titles + immersive detail */
 .card.event{cursor:pointer}
 .card.event .event-main{position:relative;overflow:hidden}
 .card.event.has-cover .event-main::before{
@@ -402,6 +402,105 @@ dialog#dlg::backdrop{background:rgba(20,24,26,.58);backdrop-filter:blur(3px)}
   font-size:15px!important;
   line-height:1.5!important;
   margin-bottom:12px!important;
+}
+
+
+/* V25.2 — detail readability + unified soft menu colors */
+.detail-card-body{
+  padding:22px 20px 20px!important;
+}
+.detail-card-body h2{
+  font-size:32px!important;
+  line-height:1.06!important;
+  margin-bottom:16px!important;
+}
+.detail-card-body .detail-description{
+  font-size:20px!important;
+  line-height:1.68!important;
+  margin-top:18px!important;
+  margin-bottom:26px!important;
+}
+.detail-card-body .meta,
+.detail-card-body .detail-meta{
+  font-size:16px!important;
+  line-height:1.58!important;
+  margin-bottom:14px!important;
+}
+.detail-card-actions{
+  gap:9px!important;
+}
+.detail-card-actions a,
+.detail-card-actions button{
+  font-size:13px!important;
+  padding:9px 11px!important;
+  border-radius:11px!important;
+}
+
+/* Unify top-level selectors/popovers — remove remaining pure white panels */
+.icon-popover,
+.popover,
+.dropdown,
+.menu,
+.filter-popover,
+.sort-popover,
+.region-popover,
+.status-popover,
+.search-popover,
+.toolbar-popover,
+.selector-popover{
+  background:#f3f7f5!important;
+  border-color:#d9e6e1!important;
+}
+.icon-popover input,
+.icon-popover select,
+.popover input,
+.popover select,
+.dropdown input,
+.dropdown select,
+.menu input,
+.menu select,
+.filter-popover input,
+.filter-popover select,
+.sort-popover input,
+.sort-popover select,
+.region-popover input,
+.region-popover select,
+.status-popover input,
+.status-popover select,
+.search-popover input,
+.search-popover select,
+.toolbar-popover input,
+.toolbar-popover select,
+.selector-popover input,
+.selector-popover select{
+  background:#fbfdfc!important;
+  border-color:#d6e3de!important;
+}
+
+/* Main control containers that were still white */
+.card:has(#search),
+.card:has(#region),
+.card:has(#statusFilter),
+.card:has(#sortBy){
+  background:rgba(241,247,246,.96)!important;
+  border-color:rgba(116,145,142,.22)!important;
+}
+
+/* Native select/dropdown surfaces and toolbar control shells */
+#search,
+#region,
+#statusFilter,
+#sortBy,
+#type,
+#radius{
+  background:#fbfdfc!important;
+  border-color:#d6e3de!important;
+}
+
+/* Keep action cards white where intentional */
+.event-actions,
+.detail-card-actions{
+  background:rgba(248,251,250,.98)!important;
 }
 
 </style>
