@@ -241,7 +241,7 @@ dialog#dlg::backdrop{background:rgba(20,24,26,.58);backdrop-filter:blur(3px)}
 @media(max-width:420px){.scroll-arrows{right:3px}.scroll-arrows button{width:34px;height:34px}}
 .photo-credit{margin-top:8px;opacity:.82;font-size:10px}
 
-/* V25.2 — tappable cards + stronger image titles + immersive detail */
+/* V25.3 — tappable cards + stronger image titles + immersive detail */
 .card.event{cursor:pointer}
 .card.event .event-main{position:relative;overflow:hidden}
 .card.event.has-cover .event-main::before{
@@ -405,7 +405,7 @@ dialog#dlg::backdrop{background:rgba(20,24,26,.58);backdrop-filter:blur(3px)}
 }
 
 
-/* V25.2 — detail readability + unified soft menu colors */
+/* V25.3 — detail readability + unified soft menu colors */
 .detail-card-body{
   padding:22px 20px 20px!important;
 }
@@ -501,6 +501,106 @@ dialog#dlg::backdrop{background:rgba(20,24,26,.58);backdrop-filter:blur(3px)}
 .event-actions,
 .detail-card-actions{
   background:rgba(248,251,250,.98)!important;
+}
+
+
+/* V25.3 — Rubrike panel + soft 3D UI + brand */
+#categoryGrid{
+  background:transparent!important;
+}
+.card:has(#categoryGrid),
+section.card:has(#categoryGrid){
+  background:linear-gradient(180deg,rgba(241,247,246,.98),rgba(233,241,239,.98))!important;
+  border-color:rgba(116,145,142,.24)!important;
+  box-shadow:0 10px 24px rgba(34,58,56,.08), inset 0 1px 0 rgba(255,255,255,.85)!important;
+}
+#categoriesTitle{
+  text-shadow:0 1px 0 rgba(255,255,255,.95);
+}
+
+/* Soft 3D buttons */
+button,
+.category-card,
+.icon,
+.primary,
+.secondary,
+.bottom button,
+.detail-card-actions a,
+.detail-card-actions button{
+  background-image:linear-gradient(180deg,rgba(255,255,255,.96),rgba(230,238,236,.98))!important;
+  border:1px solid rgba(105,132,128,.32)!important;
+  box-shadow:
+    0 4px 10px rgba(38,58,56,.14),
+    inset 0 1px 0 rgba(255,255,255,.95),
+    inset 0 -1px 0 rgba(120,145,141,.16)!important;
+  transition:transform .12s ease,box-shadow .12s ease,filter .12s ease!important;
+}
+button:active,
+.category-card:active,
+.icon:active,
+.primary:active,
+.secondary:active,
+.bottom button:active,
+.detail-card-actions a:active,
+.detail-card-actions button:active{
+  transform:translateY(1px) scale(.985)!important;
+  box-shadow:
+    0 2px 5px rgba(38,58,56,.11),
+    inset 0 2px 4px rgba(90,115,111,.12)!important;
+}
+button:hover,
+.category-card:hover,
+.icon:hover,
+.primary:hover,
+.secondary:hover,
+.bottom button:hover,
+.detail-card-actions a:hover,
+.detail-card-actions button:hover{
+  filter:brightness(1.015);
+}
+
+/* Preserve emphasis for primary / active controls */
+.primary,
+.category-card.active,
+.bottom button.active{
+  background-image:linear-gradient(180deg,rgba(229,242,239,.98),rgba(202,222,217,.98))!important;
+  border-color:rgba(83,117,111,.40)!important;
+  box-shadow:
+    0 5px 12px rgba(38,58,56,.18),
+    inset 0 1px 0 rgba(255,255,255,.92),
+    inset 0 -2px 0 rgba(92,124,118,.16)!important;
+}
+
+/* Category cards specifically: never flat white */
+.category-card{
+  background-color:#edf4f2!important;
+  min-height:48px;
+}
+
+/* 3D brand */
+.app-logo{
+  background:linear-gradient(180deg,#233438 0%,#172428 58%,#0e1719 100%);
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent!important;
+  text-shadow:
+    0 1px 0 rgba(255,255,255,.5),
+    0 2px 2px rgba(20,35,38,.10),
+    0 4px 8px rgba(20,35,38,.12);
+}
+.app-logo span{
+  background:linear-gradient(180deg,#6f8f96 0%,#56757c 58%,#3f5d63 100%);
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent!important;
+  text-shadow:
+    0 1px 0 rgba(255,255,255,.45),
+    0 2px 3px rgba(45,73,78,.12);
+}
+.app-logo-line{
+  box-shadow:
+    0 1px 0 rgba(255,255,255,.85),
+    0 2px 5px rgba(51,73,77,.18)!important;
 }
 
 </style>
