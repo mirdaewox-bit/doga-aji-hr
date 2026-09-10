@@ -241,7 +241,7 @@ dialog#dlg::backdrop{background:rgba(20,24,26,.58);backdrop-filter:blur(3px)}
 @media(max-width:420px){.scroll-arrows{right:3px}.scroll-arrows button{width:34px;height:34px}}
 .photo-credit{margin-top:8px;opacity:.82;font-size:10px}
 
-/* V25.7 — tappable cards + stronger image titles + immersive detail */
+/* V25.8 — tappable cards + stronger image titles + immersive detail */
 .card.event{cursor:pointer}
 .card.event .event-main{position:relative;overflow:hidden}
 .card.event.has-cover .event-main::before{
@@ -405,7 +405,7 @@ dialog#dlg::backdrop{background:rgba(20,24,26,.58);backdrop-filter:blur(3px)}
 }
 
 
-/* V25.7 — detail readability + unified soft menu colors */
+/* V25.8 — detail readability + unified soft menu colors */
 .detail-card-body{
   padding:22px 20px 20px!important;
 }
@@ -504,7 +504,7 @@ dialog#dlg::backdrop{background:rgba(20,24,26,.58);backdrop-filter:blur(3px)}
 }
 
 
-/* V25.7 — Rubrike panel + soft 3D UI + brand */
+/* V25.8 — Rubrike panel + soft 3D UI + brand */
 #categoryGrid{
   background:transparent!important;
 }
@@ -604,7 +604,7 @@ button:hover,
 }
 
 
-/* V25.7 — clearer active states + stronger panel/button contrast */
+/* V25.8 — clearer active states + stronger panel/button contrast */
 :root{
   --panel-soft:#dbe8e8;
   --panel-soft-2:#d2e1e2;
@@ -696,7 +696,7 @@ button:active,
 }
 
 
-/* V25.7 — stronger button typography and darker controls */
+/* V25.8 — stronger button typography and darker controls */
 button,
 .category-card,
 .icon,
@@ -764,7 +764,7 @@ button.active,
 }
 
 
-/* V25.7 — lighter controls, strong active state, black text on photo cards */
+/* V25.8 — lighter controls, strong active state, black text on photo cards */
 button,
 .category-card,
 .icon,
@@ -849,7 +849,7 @@ button.active,
 }
 
 
-/* V25.7 — restore event photo colors; keep black text readable */
+/* V25.8 — restore event photo colors; keep black text readable */
 .card.event.has-cover .event-main::before{
   background:transparent!important;
 }
@@ -885,6 +885,40 @@ button.active,
 .card.event.has-cover .event-main{
   color:#111!important;
   text-shadow:none!important;
+}
+
+
+/* V25.8 — lock background while details are open + more transparent image-card text panel */
+body.modal-open{
+  overflow:hidden!important;
+  position:fixed!important;
+  width:100%!important;
+}
+
+#dlg{
+  overscroll-behavior:contain!important;
+}
+#dlg .detail{
+  overflow-y:auto!important;
+  -webkit-overflow-scrolling:touch!important;
+  overscroll-behavior:contain!important;
+  touch-action:pan-y!important;
+}
+
+/* More transparent information panel over event photos */
+.card.event.has-cover .info{
+  background:rgba(255,255,255,.48)!important;
+  border:1px solid rgba(255,255,255,.40)!important;
+  backdrop-filter:blur(1.5px)!important;
+}
+.card.event.has-cover .date{
+  background:rgba(255,255,255,.58)!important;
+}
+.card.event.has-cover .status,
+.card.event.has-cover .tag,
+.card.event.has-cover .new-badge,
+.card.event.has-cover .annual-note{
+  background-color:rgba(255,255,255,.56)!important;
 }
 
 </style>
@@ -1573,6 +1607,7 @@ function openParkDetail(p){
       <a href="${p.ticket}" target="_blank">${tr('tickets')} ↗</a>
       <a href="https://maps.google.com/?q=${encodeURIComponent(p.name)}" target="_blank">${tr('map')} ↗</a>
     </div>`;
+  lockPageForModalV258();
   $('#dlg').showModal();
 }
 
@@ -1874,6 +1909,21 @@ function expandedDescriptionV251(e){
   return parts.join(' ');
 }
 
+
+let modalScrollY=0;
+function lockPageForModalV258(){
+  if(document.body.classList.contains('modal-open'))return;
+  modalScrollY=window.scrollY||document.documentElement.scrollTop||0;
+  document.body.classList.add('modal-open');
+  document.body.style.top=`-${modalScrollY}px`;
+}
+function unlockPageForModalV258(){
+  if(!document.body.classList.contains('modal-open'))return;
+  document.body.classList.remove('modal-open');
+  document.body.style.top='';
+  window.scrollTo(0,modalScrollY);
+}
+
 function openDetail(e){
   let dates=e.status==='annual'
     ? `${tr('nextDatePending')}<br><b>${annualLine(e)}</b>`
@@ -1900,6 +1950,7 @@ function openDetail(e){
       <a href="#" id="shareDetail">↗ ${tr('share')}</a>
       ${e.status==="confirmed"?`<a href="#" id="calDetail">📅 ${tr("addCalendar")}</a>`:""}
     </div>`;
+  lockPageForModalV258();
   $('#dlg').showModal();
   $('#shareDetail').onclick=(ev)=>{ev.preventDefault();shareEvent(e)};
   if($('#calDetail')) $('#calDetail').onclick=(ev)=>{ev.preventDefault();addToCalendar(e)};
@@ -1920,7 +1971,9 @@ function resetQuickChoiceV254(){
   }
 }
 
-$('#close').onclick=()=>$('#dlg').close();$('#search').oninput=render;$('#type').onchange=render;$('#radius').onchange=render;$('#region').onchange=render;document.querySelectorAll('[data-range]').forEach(b=>b.onclick=()=>{
+$('#close').onclick=()=>{$('#dlg').close();unlockPageForModalV258();};
+$('#dlg').addEventListener('close',unlockPageForModalV258);
+$('#dlg').addEventListener('cancel',()=>setTimeout(unlockPageForModalV258,0));$('#search').oninput=render;$('#type').onchange=render;$('#radius').onchange=render;$('#region').onchange=render;document.querySelectorAll('[data-range]').forEach(b=>b.onclick=()=>{
   range=b.dataset.range;
   mode='home';
   if($('#statusFilter'))$('#statusFilter').value='all';
