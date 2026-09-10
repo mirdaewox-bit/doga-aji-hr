@@ -241,7 +241,7 @@ dialog#dlg::backdrop{background:rgba(20,24,26,.58);backdrop-filter:blur(3px)}
 @media(max-width:420px){.scroll-arrows{right:3px}.scroll-arrows button{width:34px;height:34px}}
 .photo-credit{margin-top:8px;opacity:.82;font-size:10px}
 
-/* V25.4 — tappable cards + stronger image titles + immersive detail */
+/* V25.5 — tappable cards + stronger image titles + immersive detail */
 .card.event{cursor:pointer}
 .card.event .event-main{position:relative;overflow:hidden}
 .card.event.has-cover .event-main::before{
@@ -405,7 +405,7 @@ dialog#dlg::backdrop{background:rgba(20,24,26,.58);backdrop-filter:blur(3px)}
 }
 
 
-/* V25.4 — detail readability + unified soft menu colors */
+/* V25.5 — detail readability + unified soft menu colors */
 .detail-card-body{
   padding:22px 20px 20px!important;
 }
@@ -504,7 +504,7 @@ dialog#dlg::backdrop{background:rgba(20,24,26,.58);backdrop-filter:blur(3px)}
 }
 
 
-/* V25.4 — Rubrike panel + soft 3D UI + brand */
+/* V25.5 — Rubrike panel + soft 3D UI + brand */
 #categoryGrid{
   background:transparent!important;
 }
@@ -604,7 +604,7 @@ button:hover,
 }
 
 
-/* V25.4 — clearer active states + stronger panel/button contrast */
+/* V25.5 — clearer active states + stronger panel/button contrast */
 :root{
   --panel-soft:#dbe8e8;
   --panel-soft-2:#d2e1e2;
@@ -695,6 +695,74 @@ button:active,
   border-color:rgba(82,111,114,.30)!important;
 }
 
+
+/* V25.5 — stronger button typography and darker controls */
+button,
+.category-card,
+.icon,
+.icon-control-btn,
+.primary,
+.secondary,
+.bottom button,
+.detail-card-actions a,
+.detail-card-actions button{
+  font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif!important;
+  font-weight:900!important;
+  letter-spacing:-.015em!important;
+  color:#0f1718!important;
+  background-image:linear-gradient(180deg,#9fbfc2 0%,#89adb1 100%)!important;
+  background-color:#95b7ba!important;
+  border-color:rgba(55,84,88,.44)!important;
+  box-shadow:
+    0 5px 12px rgba(38,58,56,.18),
+    inset 0 1px 0 rgba(255,255,255,.55),
+    inset 0 -2px 0 rgba(60,88,92,.18)!important;
+}
+
+/* Keep panels lighter than controls */
+.card.hero,
+.card.controls,
+.card:has(#categoryGrid),
+section.card:has(#categoryGrid),
+.icon-popover,
+.popover,
+.dropdown,
+.menu,
+.filter-popover,
+.sort-popover,
+.region-popover,
+.status-popover,
+.search-popover,
+.toolbar-popover,
+.selector-popover{
+  background:linear-gradient(180deg,#d7e5e5 0%,#cddedf 100%)!important;
+}
+
+/* Active state darker but text remains black */
+button.active,
+.primary,
+.secondary.active,
+.category-card.active,
+.icon-control-btn.active,
+.bottom button.active,
+.saved{
+  color:#0b1112!important;
+  background-image:linear-gradient(180deg,#88afb4 0%,#739ca1 100%)!important;
+  background-color:#7fa4a9!important;
+  border-color:rgba(45,73,78,.54)!important;
+}
+
+/* Slightly larger text on main controls */
+.primary,
+.secondary,
+.category-card,
+.icon-control-btn{
+  font-size:15px!important;
+}
+.category-card{
+  font-size:15.5px!important;
+}
+
 </style>
 </head>
 <body>
@@ -729,7 +797,7 @@ button:active,
           <button class="icon-control-btn" id="regionIconBtn" aria-label="Regija">🗺️</button>
           <div class="icon-popover" id="regionPopover" style="background:#f3f7f5;border-color:#d9e6e1">
             <label id="regionPopoverLabel">Regija</label>
-            <select id="region"><option value="all">Cijela Hrvatska</option><option value="Zagreb i okolica">Zagreb i okolica</option><option value="Sjeverna Hrvatska">Sjeverna Hrvatska</option><option value="Slavonija i Baranja">Slavonija i Baranja</option><option value="Istra i Kvarner">Istra i Kvarner</option><option value="Dalmacija">Dalmacija</option><option value="Lika i Gorski kotar">Lika i Gorski kotar</option></select>
+            <select id="region"><option value="all">Sve regije</option><option value="Zagreb i okolica">Zagreb i okolica</option><option value="Sjeverna Hrvatska">Sjeverna Hrvatska</option><option value="Slavonija i Baranja">Slavonija i Baranja</option><option value="Istra i Kvarner">Istra i Kvarner</option><option value="Dalmacija">Dalmacija</option><option value="Lika i Gorski kotar">Lika i Gorski kotar</option></select>
           </div>
         </div><div class="icon-control-wrap">
           <button class="icon-control-btn" id="sortIconBtn" aria-label="Sortiranje">↕️</button>
@@ -1254,14 +1322,17 @@ const parks=[
 ];
 
 const I18N={
-hr:{mainTitle:"Nemoj saznati prekasno.",heroTitle:"Kamo ovih dana?",heroText:"Tradicionalna događanja, gastro, glazba i lokalne manifestacije — na vrijeme i blizu tebe.",search:"Pretraži",searchPh:"npr. Vinkovci, Alka, maruni…",language:"Jezik",distance:"Udaljenost",type:"Vrsta",region:"Regija",next30:"Sljedećih 30 dana",weekend:"Ovaj vikend",all:"Sve",near:"📍 Blizu mene",home:"Početna",favorites:"Favoriti",annuals:"Godišnje",details:"Detalji",favorite:"Favorit",share:"Dijeli",confirmed:"potvrđeno",annual:"godišnje",newDate:"Novi datum još nije objavljen",lastKnown:"Zadnje poznato održavanje",locationOn:"📍 Lokacija uključena — prikazujem udaljenosti",locationUnavailable:"Lokacija nije dostupna u pregledniku.",locationDenied:"Lokacija nije dopuštena — možeš koristiti cijelu Hrvatsku.",noEvents:"Nema događaja za ovaj odabir.",official:"Službeni izvor",map:"Karta",dateConfirmed:"DATUM POTVRĐEN",annualEvent:"GODIŠNJA MANIFESTACIJA",nextDatePending:"Novi datum još nije potvrđen.",distanceMissing:"udaljenost nije unesena",copied:"Poveznica i podaci o događaju kopirani su.",nightTitle:"Gdje izaći?",nightStrong:"Drugi dio aplikacije",nightText:"Kad si u nekom gradu, ovdje ćemo nuditi mali izbor aktualnih pubova, live glazbe i izlazaka. Nećemo od ovoga raditi drugi Google Maps.",month:"Ovaj mjesec",sort:"Sortiranje",sortDate:"Najranije",sortDistance:"Najbliže",sortAnnual:"Godišnji prvo",soon:"Uskoro",addCalendar:"Dodaj u kalendar",usualMonth:"Uobičajeno se održava u",today:"Danas",tomorrow:"Sutra",parks:"Parkovi",nationalParks:"Nacionalni parkovi",bestFor:"Najbolje za",tickets:"Kupi ulaznicu",parkInfo:"Službena stranica",eventsCount:"događaja",within:"unutar",locationOff:"Uključi lokaciju za udaljenosti",sortNewest:"Najnovije potvrđeno",expected:"Očekivani termin",report:"Prijavi netočan datum",suggest:"Predloži događaj",communityTitle:"Pomozi poboljšati bazu",communityText:"Prijava otvara poruku s podacima koje možeš poslati vlasniku aplikacije.",summaryEvents:"događaja",summaryWeekend:"ovaj vikend",summaryNear:"unutar",summaryNew:"novih potvrđenih datuma",reportSubject:"Prijava netočnog datuma — Događaji HR",suggestSubject:"Prijedlog događaja — Događaji HR",reportBody:"Molim provjeru datuma za događaj:",suggestBody:"Predlažem novi događaj za aplikaciju Događaji HR:",expectedUsual:"uobičajeno",expectedLikely:"vjerojatno",status:"Status",allStatus:"Svi",onlyConfirmed:"Samo potvrđeni datumi",onlyAnnual:"Samo godišnji bez novog datuma",newInDb:"Novo u bazi",typeAll:"Sve rubrike",typeSport:"Sport",typeGastro:"Gastro",typeMusic:"Music",categoriesTitle:"Rubrike",typeTradition:"Tradicija i fešte",searchLabel:"Pretraži",regionLabel:"Regija",statusLabelTxt:"Status",sortLabelTxt:"Sortiranje",typeParks:"Parkovi",annualQuick:"Godišnje",typeAllCard:"Sve",annualUnknown:"Godišnje — datum još nije potvrđen",eventsWord:"događaja",multipleDates:"više termina",monthsV25:["Siječanj", "Veljača", "Ožujak", "Travanj", "Svibanj", "Lipanj", "Srpanj", "Kolovoz", "Rujan", "Listopad", "Studeni", "Prosinac"]},
-en:{mainTitle:"Don't find out too late.",heroTitle:"What's happening?",heroText:"Traditional events, food, concerts and local festivals — on time and near you.",search:"Search",searchPh:"e.g. Vinkovci, Alka, chestnuts…",language:"Language",distance:"Distance",type:"Type",region:"Region",next30:"Next 30 days",weekend:"This weekend",all:"All",near:"📍 Near me",home:"Home",favorites:"Favorites",annuals:"Annual",details:"Details",favorite:"Favorite",share:"Share",confirmed:"confirmed",annual:"annual",newDate:"New date not announced yet",lastKnown:"Last known date",locationOn:"📍 Location enabled — showing distances",locationUnavailable:"Location is not available in this browser.",locationDenied:"Location permission denied — you can still browse all of Croatia.",noEvents:"No events for this selection.",official:"Official source",map:"Map",dateConfirmed:"DATE CONFIRMED",annualEvent:"ANNUAL EVENT",nextDatePending:"Next date has not been confirmed yet.",distanceMissing:"distance not available",copied:"Event link and details copied.",nightTitle:"Where to go out?",nightStrong:"Second part of the app",nightText:"When you're in a city, we'll show a small selection of current pubs, live music and nightlife. This won't become another Google Maps.",month:"This month",sort:"Sort",sortDate:"Earliest",sortDistance:"Nearest",sortAnnual:"Annual first",soon:"Soon",addCalendar:"Add to calendar",usualMonth:"Usually held in",today:"Today",tomorrow:"Tomorrow",parks:"Parks",nationalParks:"National parks",bestFor:"Best for",tickets:"Buy ticket",parkInfo:"Official website",eventsCount:"events",within:"within",locationOff:"Enable location for distances"},
+hr:{mainTitle:"Nemoj saznati prekasno.",heroTitle:"Kamo ovih dana?",heroText:"Tradicionalna događanja, gastro, glazba i lokalne manifestacije — na vrijeme i blizu tebe.",search:"Pretraži",searchPh:"npr. Vinkovci, Alka, maruni…",language:"Jezik",distance:"Udaljenost",type:"Vrsta",region:"Regija",next30:"Sljedećih 30 dana",weekend:"Ovaj vikend",all:"Sve",near:"📍 Blizu mene",home:"Početna",favorites:"Favoriti",annuals:"Godišnje",details:"Detalji",favorite:"Favorit",share:"Dijeli",confirmed:"potvrđeno",annual:"godišnje",newDate:"Novi datum još nije objavljen",lastKnown:"Zadnje poznato održavanje",locationOn:"📍 Lokacija uključena — prikazujem udaljenosti",locationUnavailable:"Lokacija nije dostupna u pregledniku.",locationDenied:"Lokacija nije dopuštena — možeš koristiti cijelu Hrvatsku.",noEvents:"Nema događaja za ovaj odabir.",official:"Službeni izvor",map:"Karta",dateConfirmed:"DATUM POTVRĐEN",annualEvent:"GODIŠNJA MANIFESTACIJA",nextDatePending:"Novi datum još nije potvrđen.",distanceMissing:"udaljenost nije unesena",copied:"Poveznica i podaci o događaju kopirani su.",nightTitle:"Gdje izaći?",nightStrong:"Drugi dio aplikacije",nightText:"Kad si u nekom gradu, ovdje ćemo nuditi mali izbor aktualnih pubova, live glazbe i izlazaka. Nećemo od ovoga raditi drugi Google Maps.",month:"Ovaj mjesec",sort:"Sortiranje",sortDate:"Najranije",sortDistance:"Najbliže",sortAnnual:"Godišnji prvo",soon:"Uskoro",addCalendar:"Dodaj u kalendar",usualMonth:"Uobičajeno se održava u",today:"Danas",tomorrow:"Sutra",parks:"Parkovi",nationalParks:"Nacionalni parkovi",bestFor:"Najbolje za",tickets:"Kupi ulaznicu",parkInfo:"Službena stranica",eventsCount:"događaja",within:"unutar",locationOff:"Uključi lokaciju za udaljenosti",sortNewest:"Najnovije potvrđeno",expected:"Očekivani termin",report:"Prijavi netočan datum",suggest:"Predloži događaj",communityTitle:"Pomozi poboljšati bazu",communityText:"Prijava otvara poruku s podacima koje možeš poslati vlasniku aplikacije.",summaryEvents:"događaja",summaryWeekend:"ovaj vikend",summaryNear:"unutar",summaryNew:"novih potvrđenih datuma",reportSubject:"Prijava netočnog datuma — Događaji HR",suggestSubject:"Prijedlog događaja — Događaji HR",reportBody:"Molim provjeru datuma za događaj:",suggestBody:"Predlažem novi događaj za aplikaciju Događaji HR:",expectedUsual:"uobičajeno",expectedLikely:"vjerojatno",status:"Status",allStatus:"Svi",onlyConfirmed:"Samo potvrđeni datumi",onlyAnnual:"Samo godišnji bez novog datuma",newInDb:"Novo u bazi",typeAll:"Sve rubrike",typeSport:"Sport",typeGastro:"Gastro",typeMusic:"Music",categoriesTitle:"Rubrike",typeTradition:"Tradicija i fešte",searchLabel:"Pretraži",regionLabel:"Regija",regionAll:"Sve regije",statusLabelTxt:"Status",sortLabelTxt:"Sortiranje",typeParks:"Parkovi",annualQuick:"Godišnje",typeAllCard:"Sve",annualUnknown:"Godišnje — datum još nije potvrđen",eventsWord:"događaja",multipleDates:"više termina",monthsV25:["Siječanj", "Veljača", "Ožujak", "Travanj", "Svibanj", "Lipanj", "Srpanj", "Kolovoz", "Rujan", "Listopad", "Studeni", "Prosinac"]},
+en:{mainTitle:"Don't find out too late.",heroTitle:"What's happening?",heroText:"Traditional events, food, concerts and local festivals — on time and near you.",search:"Search",searchPh:"e.g. Vinkovci, Alka, chestnuts…",language:"Language",distance:"Distance",type:"Type",region:"Region",regionAll:"Alle Regionen",regionAll:"All regions",next30:"Next 30 days",weekend:"This weekend",all:"All",near:"📍 Near me",home:"Home",favorites:"Favorites",annuals:"Annual",details:"Details",favorite:"Favorite",share:"Share",confirmed:"confirmed",annual:"annual",newDate:"New date not announced yet",lastKnown:"Last known date",locationOn:"📍 Location enabled — showing distances",locationUnavailable:"Location is not available in this browser.",locationDenied:"Location permission denied — you can still browse all of Croatia.",noEvents:"No events for this selection.",official:"Official source",map:"Map",dateConfirmed:"DATE CONFIRMED",annualEvent:"ANNUAL EVENT",nextDatePending:"Next date has not been confirmed yet.",distanceMissing:"distance not available",copied:"Event link and details copied.",nightTitle:"Where to go out?",nightStrong:"Second part of the app",nightText:"When you're in a city, we'll show a small selection of current pubs, live music and nightlife. This won't become another Google Maps.",month:"This month",sort:"Sort",sortDate:"Earliest",sortDistance:"Nearest",sortAnnual:"Annual first",soon:"Soon",addCalendar:"Add to calendar",usualMonth:"Usually held in",today:"Today",tomorrow:"Tomorrow",parks:"Parks",nationalParks:"National parks",bestFor:"Best for",tickets:"Buy ticket",parkInfo:"Official website",eventsCount:"events",within:"within",locationOff:"Enable location for distances"},
 de:{mainTitle:"Nicht zu spät davon erfahren.",heroTitle:"Was ist los?",heroText:"Traditionelle Veranstaltungen, Kulinarik, Konzerte und lokale Feste — rechtzeitig und in deiner Nähe.",search:"Suchen",searchPh:"z. B. Vinkovci, Alka, Maroni…",language:"Sprache",distance:"Entfernung",type:"Art",region:"Region",next30:"Nächste 30 Tage",weekend:"Dieses Wochenende",all:"Alle",near:"📍 In meiner Nähe",home:"Start",favorites:"Favoriten",annuals:"Jährlich",details:"Details",favorite:"Favorit",share:"Teilen",confirmed:"bestätigt",annual:"jährlich",newDate:"Neues Datum noch nicht bekannt",lastKnown:"Letzter bekannter Termin",locationOn:"📍 Standort aktiviert — Entfernungen werden angezeigt",locationUnavailable:"Standort ist in diesem Browser nicht verfügbar.",locationDenied:"Standortzugriff verweigert — ganz Kroatien kann weiterhin durchsucht werden.",noEvents:"Keine Veranstaltungen für diese Auswahl.",official:"Offizielle Quelle",map:"Karte",dateConfirmed:"DATUM BESTÄTIGT",annualEvent:"JÄHRLICHE VERANSTALTUNG",nextDatePending:"Der nächste Termin wurde noch nicht bestätigt.",distanceMissing:"Entfernung nicht verfügbar",copied:"Link und Veranstaltungsdaten wurden kopiert.",nightTitle:"Ausgehen",nightStrong:"Zweiter Teil der App",nightText:"Wenn du in einer Stadt bist, zeigen wir eine kleine Auswahl aktueller Pubs, Live-Musik und Ausgehmöglichkeiten. Es soll kein zweites Google Maps werden.",month:"Diesen Monat",sort:"Sortierung",sortDate:"Früheste zuerst",sortDistance:"Nächste zuerst",sortAnnual:"Jährliche zuerst",soon:"Bald",addCalendar:"Zum Kalender hinzufügen",usualMonth:"Findet üblicherweise statt im",today:"Heute",tomorrow:"Morgen",parks:"Parks",nationalParks:"Nationalparks",bestFor:"Ideal für",tickets:"Ticket kaufen",parkInfo:"Offizielle Website",eventsCount:"Veranstaltungen",within:"im Umkreis von",locationOff:"Standort für Entfernungen aktivieren"},
-it:{mainTitle:"Non scoprirlo troppo tardi.",heroTitle:"Cosa c'è in programma?",heroText:"Eventi tradizionali, gastronomia, concerti e feste locali — in tempo e vicino a te.",search:"Cerca",searchPh:"es. Vinkovci, Alka, castagne…",language:"Lingua",distance:"Distanza",type:"Tipo",region:"Regione",next30:"Prossimi 30 giorni",weekend:"Questo weekend",all:"Tutti",near:"📍 Vicino a me",home:"Home",favorites:"Preferiti",annuals:"Annuali",details:"Dettagli",favorite:"Preferito",share:"Condividi",confirmed:"confermato",annual:"annuale",newDate:"Nuova data non ancora annunciata",lastKnown:"Ultima data nota",locationOn:"📍 Posizione attivata — mostro le distanze",locationUnavailable:"La posizione non è disponibile in questo browser.",locationDenied:"Permesso di posizione negato — puoi comunque esplorare tutta la Croazia.",noEvents:"Nessun evento per questa selezione.",official:"Fonte ufficiale",map:"Mappa",dateConfirmed:"DATA CONFERMATA",annualEvent:"EVENTO ANNUALE",nextDatePending:"La prossima data non è ancora stata confermata.",distanceMissing:"distanza non disponibile",copied:"Link e dettagli dell'evento copiati.",nightTitle:"Dove uscire?",nightStrong:"Seconda parte dell'app",nightText:"Quando sei in una città, mostreremo una piccola selezione di pub, musica dal vivo e locali. Non vogliamo trasformarlo in un altro Google Maps.",month:"Questo mese",sort:"Ordina",sortDate:"Prima data",sortDistance:"Più vicini",sortAnnual:"Annuali prima",soon:"Prossimamente",addCalendar:"Aggiungi al calendario",usualMonth:"Di solito si svolge a",today:"Oggi",tomorrow:"Domani",parks:"Parchi",nationalParks:"Parchi nazionali",bestFor:"Ideale per",tickets:"Acquista biglietto",parkInfo:"Sito ufficiale",eventsCount:"eventi",within:"entro",locationOff:"Attiva la posizione per le distanze"}
+it:{mainTitle:"Non scoprirlo troppo tardi.",heroTitle:"Cosa c'è in programma?",heroText:"Eventi tradizionali, gastronomia, concerti e feste locali — in tempo e vicino a te.",search:"Cerca",searchPh:"es. Vinkovci, Alka, castagne…",language:"Lingua",distance:"Distanza",type:"Tipo",region:"Regione",regionAll:"Tutte le regioni",next30:"Prossimi 30 giorni",weekend:"Questo weekend",all:"Tutti",near:"📍 Vicino a me",home:"Home",favorites:"Preferiti",annuals:"Annuali",details:"Dettagli",favorite:"Preferito",share:"Condividi",confirmed:"confermato",annual:"annuale",newDate:"Nuova data non ancora annunciata",lastKnown:"Ultima data nota",locationOn:"📍 Posizione attivata — mostro le distanze",locationUnavailable:"La posizione non è disponibile in questo browser.",locationDenied:"Permesso di posizione negato — puoi comunque esplorare tutta la Croazia.",noEvents:"Nessun evento per questa selezione.",official:"Fonte ufficiale",map:"Mappa",dateConfirmed:"DATA CONFERMATA",annualEvent:"EVENTO ANNUALE",nextDatePending:"La prossima data non è ancora stata confermata.",distanceMissing:"distanza non disponibile",copied:"Link e dettagli dell'evento copiati.",nightTitle:"Dove uscire?",nightStrong:"Seconda parte dell'app",nightText:"Quando sei in una città, mostreremo una piccola selezione di pub, musica dal vivo e locali. Non vogliamo trasformarlo in un altro Google Maps.",month:"Questo mese",sort:"Ordina",sortDate:"Prima data",sortDistance:"Più vicini",sortAnnual:"Annuali prima",soon:"Prossimamente",addCalendar:"Aggiungi al calendario",usualMonth:"Di solito si svolge a",today:"Oggi",tomorrow:"Domani",parks:"Parchi",nationalParks:"Parchi nazionali",bestFor:"Ideale per",tickets:"Acquista biglietto",parkInfo:"Sito ufficiale",eventsCount:"eventi",within:"entro",locationOff:"Attiva la posizione per le distanze"}
 };
 let lang=localStorage.getItem('appLang')||'hr';
 function tr(k){return (I18N[lang]&&I18N[lang][k])||I18N.hr[k]||k}
 function applyLanguage(){
+  const regionAllOpt=document.querySelector('#region option[value="all"]');
+  if(regionAllOpt)regionAllOpt.textContent=tr('regionAll');
+
   document.documentElement.lang=lang;
   const s=id=>document.getElementById(id);
   if(s('langSelect')) s('langSelect').value=lang;
