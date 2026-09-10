@@ -241,7 +241,7 @@ dialog#dlg::backdrop{background:rgba(20,24,26,.58);backdrop-filter:blur(3px)}
 @media(max-width:420px){.scroll-arrows{right:3px}.scroll-arrows button{width:34px;height:34px}}
 .photo-credit{margin-top:8px;opacity:.82;font-size:10px}
 
-/* V25 — tappable cards + stronger image titles + immersive detail */
+/* V25.1 — tappable cards + stronger image titles + immersive detail */
 .card.event{cursor:pointer}
 .card.event .event-main{position:relative;overflow:hidden}
 .card.event.has-cover .event-main::before{
@@ -332,6 +332,76 @@ dialog#dlg::backdrop{background:rgba(20,24,26,.58);backdrop-filter:blur(3px)}
   #dlg .close{right:14px;top:14px}
   .detail-cover{min-height:34vh!important}
   .detail-card-body h2{font-size:28px!important}
+}
+
+
+/* V25.1 fullscreen detail fix */
+#dlg{
+  position:fixed!important;
+  inset:0!important;
+  width:100vw!important;
+  height:100dvh!important;
+  max-width:none!important;
+  max-height:none!important;
+  margin:0!important;
+  padding:0!important;
+  border:0!important;
+  border-radius:0!important;
+  overflow:hidden!important;
+  background:#fff!important;
+}
+#dlg[open]{display:block!important}
+#dlg .detail{
+  width:100%!important;
+  height:100%!important;
+  max-height:none!important;
+  overflow-y:auto!important;
+  background:#fff!important;
+}
+#dlg .close{
+  position:fixed!important;
+  top:14px!important;
+  right:14px!important;
+  z-index:10001!important;
+}
+#dlg::backdrop{background:rgba(0,0,0,.72)!important}
+
+/* V25.1 image-card hierarchy */
+.card.event.has-cover .event-top{
+  display:flex!important;
+  flex-direction:column!important;
+  align-items:flex-start!important;
+  gap:8px!important;
+}
+.card.event.has-cover .event-top .info{
+  width:100%!important;
+}
+.card.event.has-cover .event-top .info > div:first-child{
+  order:-1;
+  margin-bottom:8px!important;
+}
+.card.event.has-cover h3{
+  margin-top:8px!important;
+  margin-bottom:10px!important;
+}
+.card.event.has-cover .status{
+  display:inline-flex!important;
+  margin-right:6px!important;
+  margin-bottom:4px!important;
+}
+
+
+.detail-card-body .detail-description{
+  font-size:18px!important;
+  line-height:1.65!important;
+  margin-top:16px!important;
+  margin-bottom:22px!important;
+}
+.detail-card-body .meta,
+.detail-card-body .detail-meta{
+  font-size:15px!important;
+  line-height:1.5!important;
+  margin-bottom:12px!important;
 }
 
 </style>
@@ -1265,6 +1335,21 @@ function render(){
   document.querySelectorAll('[data-cal]').forEach(b=>b.onclick=(ev)=>{ev.stopPropagation();return addToCalendar(events.find(e=>e.id===b.dataset.cal));});
   document.querySelectorAll('[data-report]').forEach(b=>b.onclick=(ev)=>{ev.stopPropagation();const e=events.find(x=>x.id===b.dataset.report);openMail(tr('reportSubject'),`${tr('reportBody')}\n\n${e.name} — ${e.city}\n${e.source}`)});
 }
+
+function expandedDescriptionV251(e){
+  const base=(e.desc||'').trim();
+  if(base.length>=170)return base;
+  const parts=[];
+  if(base)parts.push(base);
+  const types=(e.type||[]);
+  if(types.includes('tradicija')) parts.push('Manifestacija je dio lokalne tradicije i okuplja posjetitelje oko običaja, baštine i zajedničkog druženja.');
+  if(types.includes('gastro')) parts.push('Poseban naglasak je na lokalnoj hrani, piću i okusima kraja.');
+  if(types.includes('sport')) parts.push('Program uključuje i sportski ili natjecateljski dio povezan s lokalnom tradicijom.');
+  if(types.includes('glazba')) parts.push('Uz glavni program obično je prisutan i glazbeni sadržaj.');
+  if(e.city) parts.push(`Održava se na području ${e.city}.`);
+  return parts.join(' ');
+}
+
 function openDetail(e){
   let dates=e.status==='annual'
     ? `${tr('nextDatePending')}<br><b>${annualLine(e)}</b>`
@@ -1281,7 +1366,7 @@ function openDetail(e){
         <div class="small">${e.status==='confirmed'?'✓ '+tr('dateConfirmed'):'🔔 '+tr('annualEvent')}</div>
         <h2>${e.name}</h2>
         <div class="meta">📍 ${e.city}<br>📅 ${dates}</div>
-        <p class="detail-description">${e.desc}</p>
+        <p class="detail-description">${expandedDescriptionV251(e)}</p>
         ${imageCreditsV25[e.id]?`<div class="small photo-credit">📷 ${imageCreditsV25[e.id].author} · ${imageCreditsV25[e.id].license}</div>`:''}
       </div>
     </div>
