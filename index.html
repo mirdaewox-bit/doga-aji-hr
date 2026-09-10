@@ -241,7 +241,7 @@ dialog#dlg::backdrop{background:rgba(20,24,26,.58);backdrop-filter:blur(3px)}
 @media(max-width:420px){.scroll-arrows{right:3px}.scroll-arrows button{width:34px;height:34px}}
 .photo-credit{margin-top:8px;opacity:.82;font-size:10px}
 
-/* V25.6 — tappable cards + stronger image titles + immersive detail */
+/* V25.7 — tappable cards + stronger image titles + immersive detail */
 .card.event{cursor:pointer}
 .card.event .event-main{position:relative;overflow:hidden}
 .card.event.has-cover .event-main::before{
@@ -405,7 +405,7 @@ dialog#dlg::backdrop{background:rgba(20,24,26,.58);backdrop-filter:blur(3px)}
 }
 
 
-/* V25.6 — detail readability + unified soft menu colors */
+/* V25.7 — detail readability + unified soft menu colors */
 .detail-card-body{
   padding:22px 20px 20px!important;
 }
@@ -504,7 +504,7 @@ dialog#dlg::backdrop{background:rgba(20,24,26,.58);backdrop-filter:blur(3px)}
 }
 
 
-/* V25.6 — Rubrike panel + soft 3D UI + brand */
+/* V25.7 — Rubrike panel + soft 3D UI + brand */
 #categoryGrid{
   background:transparent!important;
 }
@@ -604,7 +604,7 @@ button:hover,
 }
 
 
-/* V25.6 — clearer active states + stronger panel/button contrast */
+/* V25.7 — clearer active states + stronger panel/button contrast */
 :root{
   --panel-soft:#dbe8e8;
   --panel-soft-2:#d2e1e2;
@@ -696,7 +696,7 @@ button:active,
 }
 
 
-/* V25.6 — stronger button typography and darker controls */
+/* V25.7 — stronger button typography and darker controls */
 button,
 .category-card,
 .icon,
@@ -764,7 +764,7 @@ button.active,
 }
 
 
-/* V25.6 — lighter controls, strong active state, black text on photo cards */
+/* V25.7 — lighter controls, strong active state, black text on photo cards */
 button,
 .category-card,
 .icon,
@@ -846,6 +846,45 @@ button.active,
   margin:0!important;
   font-size:17px!important;
   line-height:1.55!important;
+}
+
+
+/* V25.7 — restore event photo colors; keep black text readable */
+.card.event.has-cover .event-main::before{
+  background:transparent!important;
+}
+.card.event.has-cover .info{
+  background:rgba(255,255,255,.76)!important;
+  border-radius:14px!important;
+  padding:10px 11px!important;
+  backdrop-filter:blur(2px);
+}
+.card.event.has-cover .date{
+  background:rgba(255,255,255,.84)!important;
+  border:1px solid rgba(60,85,88,.18)!important;
+}
+.card.event.has-cover .status,
+.card.event.has-cover .tag,
+.card.event.has-cover .new-badge,
+.card.event.has-cover .annual-note{
+  background-color:rgba(255,255,255,.82)!important;
+  color:#111!important;
+}
+.card.event.has-cover .status.confirmed{
+  color:#174b35!important;
+}
+.card.event.has-cover .status.annual{
+  color:#725800!important;
+}
+.card.event.has-cover h3,
+.card.event.has-cover .meta,
+.card.event.has-cover .date,
+.card.event.has-cover .date b,
+.card.event.has-cover .date span,
+.card.event.has-cover .info,
+.card.event.has-cover .event-main{
+  color:#111!important;
+  text-shadow:none!important;
 }
 
 </style>
@@ -1543,7 +1582,7 @@ function renderParks(){
   if(user)arr.sort((a,b)=>km(user.lat,user.lon,a.lat,a.lon)-km(user.lat,user.lon,b.lat,b.lon));
   $('#count').textContent=arr.length;
   updateSummary(arr);updateStats(arr);$('#title').textContent=tr('nationalParks');updateStats(arr);list.innerHTML='';
-  arr.forEach(p=>{const dist=user?` • ${Math.round(km(user.lat,user.lon,p.lat,p.lon))} km`:'';let el=document.createElement('article');el.className='card park-card visual-park';const img=parkImages[p.id]||'';el.innerHTML=`<div class="park-cover" style="background-image:url('${img}')"></div><div class="park-content"><div class="small">🏞️ ${tr('nationalParks')}</div><h3>${p.name}</h3><div class="meta">📍 ${p.city} • ${translatedRegion(p.region)}${dist}</div><p>${p.desc[lang]||p.desc.hr}</p><div class="park-best">${tr('bestFor')}: ${p.best[lang]||p.best.hr}</div><div class="park-actions"><a href="${p.info}" target="_blank">${tr('parkInfo')} ↗</a><a class="ticket" href="${p.ticket}" target="_blank">🎟️ ${tr('tickets')} ↗</a></div></div>`;list.appendChild(el)});
+  arr.forEach(p=>{const dist=user?` • ${Math.round(km(user.lat,user.lon,p.lat,p.lon))} km`:'';let el=document.createElement('article');el.className='card park-card visual-park';el.dataset.parkId=p.id;const img=parkImages[p.id]||'';el.innerHTML=`<div class="park-cover" style="background-image:url('${img}')"></div><div class="park-content"><div class="small">🏞️ ${tr('nationalParks')}</div><h3>${p.name}</h3><div class="meta">📍 ${p.city} • ${translatedRegion(p.region)}${dist}</div><p>${p.desc[lang]||p.desc.hr}</p><div class="park-best">${tr('bestFor')}: ${p.best[lang]||p.best.hr}</div><div class="park-actions"><a href="${p.info}" target="_blank">${tr('parkInfo')} ↗</a><a class="ticket" href="${p.ticket}" target="_blank">🎟️ ${tr('tickets')} ↗</a></div></div>`;list.appendChild(el)});
   if(!arr.length)list.innerHTML=`<div class="card empty">${tr('noEvents')}</div>`;
   document.querySelectorAll('.park-card').forEach(card=>{
     card.setAttribute('tabindex','0');
