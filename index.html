@@ -241,7 +241,7 @@ dialog#dlg::backdrop{background:rgba(20,24,26,.58);backdrop-filter:blur(3px)}
 @media(max-width:420px){.scroll-arrows{right:3px}.scroll-arrows button{width:34px;height:34px}}
 .photo-credit{margin-top:8px;opacity:.82;font-size:10px}
 
-/* V25.5 — tappable cards + stronger image titles + immersive detail */
+/* V25.6 — tappable cards + stronger image titles + immersive detail */
 .card.event{cursor:pointer}
 .card.event .event-main{position:relative;overflow:hidden}
 .card.event.has-cover .event-main::before{
@@ -405,7 +405,7 @@ dialog#dlg::backdrop{background:rgba(20,24,26,.58);backdrop-filter:blur(3px)}
 }
 
 
-/* V25.5 — detail readability + unified soft menu colors */
+/* V25.6 — detail readability + unified soft menu colors */
 .detail-card-body{
   padding:22px 20px 20px!important;
 }
@@ -504,7 +504,7 @@ dialog#dlg::backdrop{background:rgba(20,24,26,.58);backdrop-filter:blur(3px)}
 }
 
 
-/* V25.5 — Rubrike panel + soft 3D UI + brand */
+/* V25.6 — Rubrike panel + soft 3D UI + brand */
 #categoryGrid{
   background:transparent!important;
 }
@@ -604,7 +604,7 @@ button:hover,
 }
 
 
-/* V25.5 — clearer active states + stronger panel/button contrast */
+/* V25.6 — clearer active states + stronger panel/button contrast */
 :root{
   --panel-soft:#dbe8e8;
   --panel-soft-2:#d2e1e2;
@@ -696,7 +696,7 @@ button:active,
 }
 
 
-/* V25.5 — stronger button typography and darker controls */
+/* V25.6 — stronger button typography and darker controls */
 button,
 .category-card,
 .icon,
@@ -761,6 +761,91 @@ button.active,
 }
 .category-card{
   font-size:15.5px!important;
+}
+
+
+/* V25.6 — lighter controls, strong active state, black text on photo cards */
+button,
+.category-card,
+.icon,
+.icon-control-btn,
+.primary,
+.secondary,
+.bottom button,
+.detail-card-actions a,
+.detail-card-actions button{
+  color:#0b1112!important;
+  background-image:linear-gradient(180deg,#c7dcde 0%,#b7d0d3 100%)!important;
+  background-color:#bfd6d8!important;
+  border-color:rgba(64,94,98,.34)!important;
+}
+button.active,
+.primary,
+.secondary.active,
+.category-card.active,
+.icon-control-btn.active,
+.bottom button.active,
+.saved{
+  color:#081011!important;
+  background-image:linear-gradient(180deg,#8fb4b8 0%,#769ea3 100%)!important;
+  background-color:#82a9ae!important;
+  border-color:rgba(43,73,78,.52)!important;
+}
+
+/* All text on event cards with images stays black and readable */
+.card.event.has-cover .event-main::before{
+  background:linear-gradient(180deg,rgba(255,255,255,.76) 0%,rgba(255,255,255,.84) 45%,rgba(255,255,255,.92) 100%)!important;
+}
+.card.event.has-cover h3,
+.card.event.has-cover .meta,
+.card.event.has-cover .annual-note,
+.card.event.has-cover .status,
+.card.event.has-cover .date,
+.card.event.has-cover .date b,
+.card.event.has-cover .date span,
+.card.event.has-cover .tag,
+.card.event.has-cover .new-badge,
+.card.event.has-cover .info,
+.card.event.has-cover .event-main{
+  color:#111!important;
+  text-shadow:none!important;
+}
+.card.event.has-cover .status.confirmed{
+  color:#174b35!important;
+}
+.card.event.has-cover .status.annual{
+  color:#7a5b00!important;
+}
+.card.event.has-cover .date{
+  background:rgba(245,247,246,.86)!important;
+  border:1px solid rgba(70,95,96,.18)!important;
+}
+.card.event.has-cover .tag{
+  background:rgba(239,244,243,.90)!important;
+}
+
+/* Park cards become tappable */
+.park-card{
+  cursor:pointer!important;
+}
+
+
+.park-detail-block{
+  margin-top:18px;
+  padding:14px 15px;
+  border-radius:16px;
+  background:#eef4f3;
+  border:1px solid rgba(70,100,101,.14);
+}
+.park-detail-block strong{
+  display:block;
+  font-size:15px;
+  margin-bottom:5px;
+}
+.park-detail-block p{
+  margin:0!important;
+  font-size:17px!important;
+  line-height:1.55!important;
 }
 
 </style>
@@ -1311,14 +1396,14 @@ function inRange(e){if(e.status==='annual')return range==='all';let s=new Date(e
 
 
 const parks=[
-{id:'plitvice',name:'Nacionalni park Plitvička jezera',region:'Lika i Gorski kotar',city:'Plitvička Jezera',lat:44.8654,lon:15.5820,best:{hr:'jezera • slapovi • šetnja',en:'lakes • waterfalls • walking',de:'Seen • Wasserfälle • Wandern',it:'laghi • cascate • passeggiate'},desc:{hr:'Najstariji i najveći hrvatski nacionalni park, poznat po sustavu sedrenih jezera i slapova.',en:'Croatia’s oldest and largest national park, famous for its travertine lakes and waterfalls.',de:'Kroatiens ältester und größter Nationalpark, bekannt für seine Travertinseen und Wasserfälle.',it:'Il più antico e grande parco nazionale croato, famoso per laghi e cascate di travertino.'},info:'https://np-plitvicka-jezera.hr/',ticket:'https://ticketing.np-plitvicka-jezera.hr/orders/'},
-{id:'krka',name:'Nacionalni park Krka',region:'Dalmacija',city:'Šibenik / Skradin',lat:43.8050,lon:15.9630,best:{hr:'slapovi • izleti brodom • baština',en:'waterfalls • boat trips • heritage',de:'Wasserfälle • Bootsfahrten • Kulturerbe',it:'cascate • escursioni in barca • patrimonio'},desc:{hr:'Park uz rijeku Krku sa sedam slapova, Skradinskim bukom, Roškim slapom i brojnim kulturnim lokalitetima.',en:'A river national park with seven waterfalls, including Skradinski buk and Roški slap, plus rich cultural heritage.',de:'Fluss-Nationalpark mit sieben Wasserfällen, darunter Skradinski buk und Roški slap, sowie reichem Kulturerbe.',it:'Parco fluviale con sette cascate, tra cui Skradinski buk e Roški slap, e numerosi siti culturali.'},info:'https://npkrka.hr/hr/',ticket:'https://npkrka.hr/hr/'},
-{id:'brijuni',name:'Nacionalni park Brijuni',region:'Istra i Kvarner',city:'Fažana / Brijuni',lat:44.9167,lon:13.7710,best:{hr:'otoci • povijest • obitelji',en:'islands • history • families',de:'Inseln • Geschichte • Familien',it:'isole • storia • famiglie'},desc:{hr:'Otočni nacionalni park nasuprot Fažani s prirodnom, arheološkom i povijesnom baštinom.',en:'An island national park opposite Fažana with natural, archaeological and historic heritage.',de:'Insel-Nationalpark vor Fažana mit Natur-, Archäologie- und Geschichtserbe.',it:'Parco nazionale insulare di fronte a Fasana, ricco di natura, archeologia e storia.'},info:'https://np-brijuni.hr/hr/',ticket:'https://shop.np-brijuni.hr/hr/ulaznice?trip=veli_brijun'},
-{id:'paklenica',name:'Nacionalni park Paklenica',region:'Dalmacija',city:'Starigrad-Paklenica',lat:44.3020,lon:15.4730,best:{hr:'planinarenje • kanjoni • penjanje',en:'hiking • canyons • climbing',de:'Wandern • Schluchten • Klettern',it:'escursionismo • canyon • arrampicata'},desc:{hr:'Velebitski park poznat po kanjonima Velike i Male Paklenice, planinarskim stazama i penjanju.',en:'A Velebit park known for the Velika and Mala Paklenica canyons, hiking trails and climbing.',de:'Velebit-Park mit den Schluchten Velika und Mala Paklenica, Wanderwegen und Kletterrouten.',it:'Parco del Velebit noto per i canyon Velika e Mala Paklenica, sentieri ed arrampicata.'},info:'https://www.np-paklenica.hr/hr/',ticket:'https://www.parkovihrvatske.hr/hr/'},
-{id:'kornati',name:'Nacionalni park Kornati',region:'Dalmacija',city:'Murter / Kornati',lat:43.8000,lon:15.3000,best:{hr:'brod • otoci • more',en:'boat • islands • sea',de:'Boot • Inseln • Meer',it:'barca • isole • mare'},desc:{hr:'Arhipelag od brojnih otoka, otočića i hridi, idealan za obilazak morem i doživljaj suhozida i kornatskog krajolika.',en:'A dense Adriatic archipelago of islands and reefs, best explored by sea for its stone walls and stark landscapes.',de:'Dichter adriatischer Archipel aus Inseln und Riffen, am besten vom Meer aus zu erleben.',it:'Fitto arcipelago adriatico di isole e scogli, ideale da esplorare via mare.'},info:'https://www.np-kornati.hr/',ticket:'https://shop.np-kornati.hr/hr/webshop'},
-{id:'mljet',name:'Nacionalni park Mljet',region:'Dalmacija',city:'Mljet',lat:42.7700,lon:17.3600,best:{hr:'jezera • bicikl • brod',en:'lakes • cycling • boat',de:'Seen • Radfahren • Boot',it:'laghi • bici • barca'},desc:{hr:'Zeleni otočni park s Velikim i Malim jezerom te otočićem sv. Marije; odličan za šetnju, bicikl i brod.',en:'A green island park with the Great and Small Lakes and St Mary’s islet, ideal for walking, cycling and boats.',de:'Grüner Inselpark mit Großem und Kleinem See sowie der Insel St. Maria; ideal zum Wandern, Radfahren und Bootfahren.',it:'Parco insulare verde con Lago Grande e Piccolo e l’isolotto di Santa Maria; ideale a piedi, in bici e in barca.'},info:'https://np-mljet.hr/',ticket:'https://np-mljet.hr/'},
-{id:'risnjak',name:'Nacionalni park Risnjak',region:'Lika i Gorski kotar',city:'Crni Lug',lat:45.4300,lon:14.6200,best:{hr:'šuma • planinarenje • izvor Kupe',en:'forest • hiking • Kupa spring',de:'Wald • Wandern • Kupa-Quelle',it:'foresta • escursionismo • sorgente della Kupa'},desc:{hr:'Šumski i planinski park Gorskog kotara s vrhovima Risnjak i Snježnik te izvorom Kupe.',en:'A forest and mountain park in Gorski kotar with Risnjak and Snježnik peaks and the source of the Kupa River.',de:'Wald- und Bergpark im Gorski kotar mit den Gipfeln Risnjak und Snježnik sowie der Kupa-Quelle.',it:'Parco forestale e montano del Gorski kotar con le cime Risnjak e Snježnik e la sorgente della Kupa.'},info:'https://www.np-risnjak.hr/',ticket:'https://www.parkovihrvatske.hr/hr/'},
-{id:'sjeverni-velebit',name:'Nacionalni park Sjeverni Velebit',region:'Lika i Gorski kotar',city:'Krasno / Zavižan',lat:44.8140,lon:14.9750,best:{hr:'planinarenje • vidici • Velebit',en:'hiking • views • Velebit',de:'Wandern • Aussichten • Velebit',it:'escursionismo • panorami • Velebit'},desc:{hr:'Visokogorski park s Premužićevom stazom, Zavižanom i iznimnim pogledima na Velebit i Jadran.',en:'A high-mountain park featuring the Premužić Trail, Zavižan and outstanding views over Velebit and the Adriatic.',de:'Hochgebirgspark mit Premužić-Weg, Zavižan und weiten Ausblicken auf Velebit und Adria.',it:'Parco d’alta montagna con il sentiero Premužić, Zavižan e grandi panorami sul Velebit e sull’Adriatico.'},info:'https://np-sjeverni-velebit.hr/',ticket:'https://www.parkovihrvatske.hr/hr/'}
+{id:'plitvice',name:'Nacionalni park Plitvička jezera',region:'Lika i Gorski kotar',city:'Plitvička Jezera',lat:44.8654,lon:15.5820,best:{hr:'jezera • slapovi • šetnja',en:'lakes • waterfalls • walking',de:'Seen • Wasserfälle • Wandern',it:'laghi • cascate • passeggiate'},desc:{hr:'Najstariji i najveći hrvatski nacionalni park, poznat po sustavu sedrenih jezera i slapova.',en:'Croatia’s oldest and largest national park, famous for its travertine lakes and waterfalls.',de:'Kroatiens ältester und größter Nationalpark, bekannt für seine Travertinseen und Wasserfälle.',it:'Il più antico e grande parco nazionale croato, famoso per laghi e cascate di travertino.'},info:'https://np-plitvicka-jezera.hr/',ticket:'https://ticketing.np-plitvicka-jezera.hr/orders/',longDesc:'Plitvička jezera najstariji su i najveći hrvatski nacionalni park. Park je poznat po sustavu od 16 većih imenovanih jezera, brojnim manjim jezerima, sedrenim barijerama i slapovima. Najpoznatiji prizor je Veliki slap, a obilazak se kombinira pješice, elektrobrodom i panoramskim vozilima. Zbog velikog interesa dobro je unaprijed odabrati ulaz i termin obilaska, osobito ljeti.',highlights:'Veliki slap • Donja i Gornja jezera • sedrene barijere • Kozjak • šetnice uz jezera',bestTime:'Proljeće i rana jesen za ugodnije temperature i manje gužve; ljeti je najveći broj posjetitelja.',visitors:'1.428.200 posjetitelja u 2025.'},
+{id:'krka',name:'Nacionalni park Krka',region:'Dalmacija',city:'Šibenik / Skradin',lat:43.8050,lon:15.9630,best:{hr:'slapovi • izleti brodom • baština',en:'waterfalls • boat trips • heritage',de:'Wasserfälle • Bootsfahrten • Kulturerbe',it:'cascate • escursioni in barca • patrimonio'},desc:{hr:'Park uz rijeku Krku sa sedam slapova, Skradinskim bukom, Roškim slapom i brojnim kulturnim lokalitetima.',en:'A river national park with seven waterfalls, including Skradinski buk and Roški slap, plus rich cultural heritage.',de:'Fluss-Nationalpark mit sieben Wasserfällen, darunter Skradinski buk und Roški slap, sowie reichem Kulturerbe.',it:'Parco fluviale con sette cascate, tra cui Skradinski buk e Roški slap, e numerosi siti culturali.'},info:'https://npkrka.hr/hr/',ticket:'https://npkrka.hr/hr/',longDesc:'Nacionalni park Krka prati tok rijeke Krke i obuhvaća sedam slapova, brojne povijesne lokalitete i krajobraze dalmatinskog krša. Najpoznatiji je Skradinski buk, ali vrijedi posjetiti i Roški slap, Visovac, manastir Krka i arheološki lokalitet Burnum. Park je pogodan za kombinaciju šetnje, izleta brodom i obilaska kulturne baštine.',highlights:'Skradinski buk • Roški slap • Visovac • Burnum • izleti brodom',bestTime:'Proljeće i jesen za ugodnije šetnje; ljeti je najživlje, ali i najtoplije.'},
+{id:'brijuni',name:'Nacionalni park Brijuni',region:'Istra i Kvarner',city:'Fažana / Brijuni',lat:44.9167,lon:13.7710,best:{hr:'otoci • povijest • obitelji',en:'islands • history • families',de:'Inseln • Geschichte • Familien',it:'isole • storia • famiglie'},desc:{hr:'Otočni nacionalni park nasuprot Fažani s prirodnom, arheološkom i povijesnom baštinom.',en:'An island national park opposite Fažana with natural, archaeological and historic heritage.',de:'Insel-Nationalpark vor Fažana mit Natur-, Archäologie- und Geschichtserbe.',it:'Parco nazionale insulare di fronte a Fasana, ricco di natura, archeologia e storia.'},info:'https://np-brijuni.hr/hr/',ticket:'https://shop.np-brijuni.hr/hr/ulaznice?trip=veli_brijun',longDesc:'Brijuni su otočni nacionalni park nasuprot Fažani, spoj mediteranske prirode, arheologije i povijesti 20. stoljeća. Posjet najčešće uključuje vožnju brodom iz Fažane i obilazak Velikog Brijuna. Posebno su zanimljivi rimski ostaci, safari park, stare vile, mediteranski krajobraz i tragovi višestoljetnog korištenja otoka.',highlights:'Veliki Brijun • safari park • rimski ostaci • mediteranski krajobraz • povijesne vile',bestTime:'Od proljeća do jeseni; izvan vrhunca ljeta ugodnije je za duži obilazak.'},
+{id:'paklenica',name:'Nacionalni park Paklenica',region:'Dalmacija',city:'Starigrad-Paklenica',lat:44.3020,lon:15.4730,best:{hr:'planinarenje • kanjoni • penjanje',en:'hiking • canyons • climbing',de:'Wandern • Schluchten • Klettern',it:'escursionismo • canyon • arrampicata'},desc:{hr:'Velebitski park poznat po kanjonima Velike i Male Paklenice, planinarskim stazama i penjanju.',en:'A Velebit park known for the Velika and Mala Paklenica canyons, hiking trails and climbing.',de:'Velebit-Park mit den Schluchten Velika und Mala Paklenica, Wanderwegen und Kletterrouten.',it:'Parco del Velebit noto per i canyon Velika e Mala Paklenica, sentieri ed arrampicata.'},info:'https://www.np-paklenica.hr/hr/',ticket:'https://www.parkovihrvatske.hr/hr/',longDesc:'Paklenica je planinski nacionalni park na južnom Velebitu, poznat po kanjonima Velike i Male Paklenice. Park ima razgranatu mrežu planinarskih staza, a međunarodno je poznat i kao jedno od najvažnijih penjališta u Hrvatskoj. Na području Parka postoji približno 150–200 km staza i putova te oko 600 uređenih penjačkih smjerova.',highlights:'Velika Paklenica • Mala Paklenica • Anića kuk • Manita peć • planinarske staze',bestTime:'Proljeće i jesen za planinarenje i penjanje; ljeti krenuti rano zbog vrućine.'},
+{id:'kornati',name:'Nacionalni park Kornati',region:'Dalmacija',city:'Murter / Kornati',lat:43.8000,lon:15.3000,best:{hr:'brod • otoci • more',en:'boat • islands • sea',de:'Boot • Inseln • Meer',it:'barca • isole • mare'},desc:{hr:'Arhipelag od brojnih otoka, otočića i hridi, idealan za obilazak morem i doživljaj suhozida i kornatskog krajolika.',en:'A dense Adriatic archipelago of islands and reefs, best explored by sea for its stone walls and stark landscapes.',de:'Dichter adriatischer Archipel aus Inseln und Riffen, am besten vom Meer aus zu erleben.',it:'Fitto arcipelago adriatico di isole e scogli, ideale da esplorare via mare.'},info:'https://www.np-kornati.hr/',ticket:'https://shop.np-kornati.hr/hr/webshop',longDesc:'Kornati su izrazito razveden otočni arhipelag i jedan od najprepoznatljivijih jadranskih krajolika. Park se najbolje doživljava morem, vlastitim plovilom ili organiziranim izletom. Suhozidi, ogoljeni otoci, strme litice i mala polja stvaraju krajolik koji se snažno razlikuje od većine ostalih hrvatskih parkova.',highlights:'kornatski arhipelag • suhozidi • litice • jedrenje • ronjenje • izleti brodom',bestTime:'Kasno proljeće i rana jesen za mirnije more i manje ljetne gužve.'},
+{id:'mljet',name:'Nacionalni park Mljet',region:'Dalmacija',city:'Mljet',lat:42.7700,lon:17.3600,best:{hr:'jezera • bicikl • brod',en:'lakes • cycling • boat',de:'Seen • Radfahren • Boot',it:'laghi • bici • barca'},desc:{hr:'Zeleni otočni park s Velikim i Malim jezerom te otočićem sv. Marije; odličan za šetnju, bicikl i brod.',en:'A green island park with the Great and Small Lakes and St Mary’s islet, ideal for walking, cycling and boats.',de:'Grüner Inselpark mit Großem und Kleinem See sowie der Insel St. Maria; ideal zum Wandern, Radfahren und Bootfahren.',it:'Parco insulare verde con Lago Grande e Piccolo e l’isolotto di Santa Maria; ideale a piedi, in bici e in barca.'},info:'https://np-mljet.hr/',ticket:'https://np-mljet.hr/',longDesc:'Nacionalni park Mljet obuhvaća zapadni dio otoka Mljeta, s Velikim i Malim jezerom kao glavnim središtem posjeta. Na otočiću sv. Marije nalazi se benediktinski samostan, a područje je pogodno za hodanje, biciklizam, kajak i mirniji boravak u prirodi.',highlights:'Veliko jezero • Malo jezero • otočić sv. Marije • biciklizam • kajak',bestTime:'Svibanj, lipanj, rujan i listopad za toplije vrijeme i manje gužve.'},
+{id:'risnjak',name:'Nacionalni park Risnjak',region:'Lika i Gorski kotar',city:'Crni Lug',lat:45.4300,lon:14.6200,best:{hr:'šuma • planinarenje • izvor Kupe',en:'forest • hiking • Kupa spring',de:'Wald • Wandern • Kupa-Quelle',it:'foresta • escursionismo • sorgente della Kupa'},desc:{hr:'Šumski i planinski park Gorskog kotara s vrhovima Risnjak i Snježnik te izvorom Kupe.',en:'A forest and mountain park in Gorski kotar with Risnjak and Snježnik peaks and the source of the Kupa River.',de:'Wald- und Bergpark im Gorski kotar mit den Gipfeln Risnjak und Snježnik sowie der Kupa-Quelle.',it:'Parco forestale e montano del Gorski kotar con le cime Risnjak e Snježnik e la sorgente della Kupa.'},info:'https://www.np-risnjak.hr/',ticket:'https://www.parkovihrvatske.hr/hr/',longDesc:'Risnjak je šumsko-planinski nacionalni park u Gorskom kotaru. Glavne atrakcije su vrh Veliki Risnjak, Snježnik i izvor rijeke Kupe. Park je odličan za planinarenje, promatranje prirode i bijeg od ljetnih vrućina, a krajobraz je potpuno drukčiji od obalnih hrvatskih parkova.',highlights:'Veliki Risnjak • Snježnik • izvor Kupe • guste šume • planinarske staze',bestTime:'Kasno proljeće do rane jeseni; zimi su potrebni iskustvo i odgovarajuća oprema.'},
+{id:'sjeverni-velebit',name:'Nacionalni park Sjeverni Velebit',region:'Lika i Gorski kotar',city:'Krasno / Zavižan',lat:44.8140,lon:14.9750,best:{hr:'planinarenje • vidici • Velebit',en:'hiking • views • Velebit',de:'Wandern • Aussichten • Velebit',it:'escursionismo • panorami • Velebit'},desc:{hr:'Visokogorski park s Premužićevom stazom, Zavižanom i iznimnim pogledima na Velebit i Jadran.',en:'A high-mountain park featuring the Premužić Trail, Zavižan and outstanding views over Velebit and the Adriatic.',de:'Hochgebirgspark mit Premužić-Weg, Zavižan und weiten Ausblicken auf Velebit und Adria.',it:'Parco d’alta montagna con il sentiero Premužić, Zavižan e grandi panorami sul Velebit e sull’Adriatico.'},info:'https://np-sjeverni-velebit.hr/',ticket:'https://www.parkovihrvatske.hr/hr/',longDesc:'Sjeverni Velebit visokogorski je nacionalni park poznat po Premužićevoj stazi, području Zavižana i iznimnim pogledima prema Kvarneru i jadranskim otocima. Park je prvenstveno planinarska destinacija, a zbog visine vrijeme se može brzo promijeniti čak i ljeti.',highlights:'Premužićeva staza • Zavižan • Velebitski botanički vrt • Gromovača • Štirovača',bestTime:'Od kasnog proljeća do rane jeseni, uz obaveznu provjeru vremenskih uvjeta prije dolaska.'}
 ];
 
 const I18N={
@@ -1428,6 +1513,30 @@ function updateStats(arr){
   else txt+=` • ${tr('locationOff')}`;
   el.textContent=txt;
 }
+
+function openParkDetail(p){
+  const image=(typeof parkImages!=='undefined'&&parkImages[p.id])?parkImages[p.id]:'';
+  $('#detail').className='detail-card';
+  $('#detail').innerHTML=`
+    ${image?`<div class="detail-cover" style="background-image:url('${image}')"></div>`:''}
+    <div class="detail-card-body">
+      <div class="small">🏞️ Nacionalni park</div>
+      <h2>${p.name}</h2>
+      <div class="meta">📍 ${p.city} • ${translatedRegion(p.region)}</div>
+      <p class="detail-description">${p.longDesc||p.desc?.[lang]||p.desc?.hr||''}</p>
+      ${p.highlights?`<div class="park-detail-block"><strong>⭐ Izdvajamo</strong><p>${p.highlights}</p></div>`:''}
+      ${p.bestTime?`<div class="park-detail-block"><strong>🗓️ Najbolje vrijeme za posjet</strong><p>${p.bestTime}</p></div>`:''}
+      ${p.visitors?`<div class="park-detail-block"><strong>👥 Godišnji broj posjetitelja</strong><p>${p.visitors}</p></div>`:''}
+      <div class="park-detail-block"><strong>ℹ️ Najbolje za</strong><p>${p.best?.[lang]||p.best?.hr||''}</p></div>
+    </div>
+    <div class="detail-card-actions">
+      <a href="${p.info}" target="_blank">${tr('parkInfo')} ↗</a>
+      <a href="${p.ticket}" target="_blank">${tr('tickets')} ↗</a>
+      <a href="https://maps.google.com/?q=${encodeURIComponent(p.name)}" target="_blank">${tr('map')} ↗</a>
+    </div>`;
+  $('#dlg').showModal();
+}
+
 function renderParks(){
   const q=$('#search').value.trim().toLowerCase(),reg=$('#region').value,rad=Number($('#radius').value);
   let arr=parks.filter(p=>(reg==='all'||p.region===reg)&&(!q||(`${p.name} ${p.city} ${p.desc[lang]||p.desc.hr}`).toLowerCase().includes(q))&&(!user||km(user.lat,user.lon,p.lat,p.lon)<=rad));
@@ -1436,6 +1545,20 @@ function renderParks(){
   updateSummary(arr);updateStats(arr);$('#title').textContent=tr('nationalParks');updateStats(arr);list.innerHTML='';
   arr.forEach(p=>{const dist=user?` • ${Math.round(km(user.lat,user.lon,p.lat,p.lon))} km`:'';let el=document.createElement('article');el.className='card park-card visual-park';const img=parkImages[p.id]||'';el.innerHTML=`<div class="park-cover" style="background-image:url('${img}')"></div><div class="park-content"><div class="small">🏞️ ${tr('nationalParks')}</div><h3>${p.name}</h3><div class="meta">📍 ${p.city} • ${translatedRegion(p.region)}${dist}</div><p>${p.desc[lang]||p.desc.hr}</p><div class="park-best">${tr('bestFor')}: ${p.best[lang]||p.best.hr}</div><div class="park-actions"><a href="${p.info}" target="_blank">${tr('parkInfo')} ↗</a><a class="ticket" href="${p.ticket}" target="_blank">🎟️ ${tr('tickets')} ↗</a></div></div>`;list.appendChild(el)});
   if(!arr.length)list.innerHTML=`<div class="card empty">${tr('noEvents')}</div>`;
+  document.querySelectorAll('.park-card').forEach(card=>{
+    card.setAttribute('tabindex','0');
+    card.setAttribute('role','button');
+    const p=parks.find(x=>x.id===card.dataset.parkId);
+    if(!p)return;
+    card.onclick=(ev)=>{
+      if(ev.target.closest('a,button'))return;
+      openParkDetail(p);
+    };
+    card.onkeydown=(ev)=>{
+      if(ev.key==='Enter'||ev.key===' '){ev.preventDefault();openParkDetail(p);}
+    };
+  });
+
 }
 
 function expectedTerm(e){
