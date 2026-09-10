@@ -241,7 +241,7 @@ dialog#dlg::backdrop{background:rgba(20,24,26,.58);backdrop-filter:blur(3px)}
 @media(max-width:420px){.scroll-arrows{right:3px}.scroll-arrows button{width:34px;height:34px}}
 .photo-credit{margin-top:8px;opacity:.82;font-size:10px}
 
-/* V25.3 — tappable cards + stronger image titles + immersive detail */
+/* V25.4 — tappable cards + stronger image titles + immersive detail */
 .card.event{cursor:pointer}
 .card.event .event-main{position:relative;overflow:hidden}
 .card.event.has-cover .event-main::before{
@@ -405,7 +405,7 @@ dialog#dlg::backdrop{background:rgba(20,24,26,.58);backdrop-filter:blur(3px)}
 }
 
 
-/* V25.3 — detail readability + unified soft menu colors */
+/* V25.4 — detail readability + unified soft menu colors */
 .detail-card-body{
   padding:22px 20px 20px!important;
 }
@@ -504,7 +504,7 @@ dialog#dlg::backdrop{background:rgba(20,24,26,.58);backdrop-filter:blur(3px)}
 }
 
 
-/* V25.3 — Rubrike panel + soft 3D UI + brand */
+/* V25.4 — Rubrike panel + soft 3D UI + brand */
 #categoryGrid{
   background:transparent!important;
 }
@@ -601,6 +601,98 @@ button:hover,
   box-shadow:
     0 1px 0 rgba(255,255,255,.85),
     0 2px 5px rgba(51,73,77,.18)!important;
+}
+
+
+/* V25.4 — clearer active states + stronger panel/button contrast */
+:root{
+  --panel-soft:#dbe8e8;
+  --panel-soft-2:#d2e1e2;
+  --button-soft:#b9d1d3;
+  --button-soft-2:#a9c5c8;
+  --button-active:#91b5ba;
+}
+
+/* Main soft panels slightly darker */
+.card.hero,
+.card.controls,
+.card:has(#categoryGrid),
+section.card:has(#categoryGrid),
+.icon-popover,
+.popover,
+.dropdown,
+.menu,
+.filter-popover,
+.sort-popover,
+.region-popover,
+.status-popover,
+.search-popover,
+.toolbar-popover,
+.selector-popover{
+  background:linear-gradient(180deg,var(--panel-soft),var(--panel-soft-2))!important;
+  border-color:rgba(73,103,106,.30)!important;
+}
+
+/* Buttons always visibly darker than their panels */
+button,
+.category-card,
+.icon,
+.icon-control-btn,
+.primary,
+.secondary,
+.bottom button,
+.detail-card-actions a,
+.detail-card-actions button{
+  color:#111!important;
+  background-image:linear-gradient(180deg,var(--button-soft),var(--button-soft-2))!important;
+  background-color:var(--button-soft)!important;
+  border-color:rgba(66,97,101,.38)!important;
+  text-shadow:none!important;
+}
+
+/* Active/pressed buttons keep BLACK text */
+button.active,
+.primary,
+.secondary.active,
+.category-card.active,
+.icon-control-btn.active,
+.bottom button.active,
+.saved{
+  color:#111!important;
+  background-image:linear-gradient(180deg,#a7c5c8,var(--button-active))!important;
+  background-color:var(--button-active)!important;
+  border-color:rgba(52,85,90,.48)!important;
+}
+
+/* Keep text black during interaction */
+button:hover,
+button:focus,
+button:focus-visible,
+button:active,
+.primary:hover,
+.primary:focus,
+.primary:active,
+.secondary:hover,
+.secondary:focus,
+.secondary:active,
+.category-card:hover,
+.category-card:focus,
+.category-card:active,
+.icon-control-btn:hover,
+.icon-control-btn:focus,
+.icon-control-btn:active{
+  color:#111!important;
+}
+
+/* Inputs stay lighter than buttons but not white */
+.icon-popover input,
+.icon-popover select,
+.controls input,
+.controls select,
+#search,#region,#statusFilter,#sortBy,#type,#radius{
+  background:#e8f0f0!important;
+  color:#111!important;
+  border-color:rgba(82,111,114,.30)!important;
 }
 
 </style>
@@ -1579,14 +1671,39 @@ function openDetail(e){
   $('#shareDetail').onclick=(ev)=>{ev.preventDefault();shareEvent(e)};
   if($('#calDetail')) $('#calDetail').onclick=(ev)=>{ev.preventDefault();addToCalendar(e)};
 }
-$('#close').onclick=()=>$('#dlg').close();$('#search').oninput=render;$('#type').onchange=render;$('#radius').onchange=render;$('#region').onchange=render;document.querySelectorAll('[data-range]').forEach(b=>b.onclick=()=>{range=b.dataset.range;mode='home';document.querySelectorAll('[data-range]').forEach(x=>x.className='secondary');b.className='primary';nav();render()});
+
+function resetQuickChoiceV254(){
+  document.querySelectorAll('[data-range]').forEach(x=>{
+    x.classList.remove('primary','active');
+    x.classList.add('secondary');
+  });
+  if($('#quickAnnual')){
+    $('#quickAnnual').classList.remove('primary','active');
+    $('#quickAnnual').classList.add('secondary');
+  }
+  if($('#nearMe')){
+    $('#nearMe').classList.remove('primary','active');
+    $('#nearMe').classList.add('secondary');
+  }
+}
+
+$('#close').onclick=()=>$('#dlg').close();$('#search').oninput=render;$('#type').onchange=render;$('#radius').onchange=render;$('#region').onchange=render;document.querySelectorAll('[data-range]').forEach(b=>b.onclick=()=>{
+  range=b.dataset.range;
+  mode='home';
+  if($('#statusFilter'))$('#statusFilter').value='all';
+  resetQuickChoiceV254();
+  b.classList.remove('secondary');
+  b.classList.add('primary');
+  nav();
+  render();
+});
 function nav(){
   [['homeBtn','home'],['savedBtn','saved']].forEach(([id,m])=>{
     const el=$('#'+id); if(el) el.className=mode===m?'active':'inactive';
   });
 }
-if($('#homeBtn')) $('#homeBtn').onclick=()=>{mode='home';range='30';nav();render()};
-if($('#savedBtn')) $('#savedBtn').onclick=()=>{mode='saved';nav();render()};
+if($('#homeBtn')) $('#homeBtn').onclick=()=>{mode='home';range='30';if($('#statusFilter'))$('#statusFilter').value='all';resetQuickChoiceV254();nav();render()};
+if($('#savedBtn')) $('#savedBtn').onclick=()=>{mode='saved';resetQuickChoiceV254();nav();render()};
 
 if($('#quickAnnual')) $('#quickAnnual').onclick=()=>{
   mode='home';
@@ -1594,8 +1711,9 @@ if($('#quickAnnual')) $('#quickAnnual').onclick=()=>{
   if($('#statusFilter')) $('#statusFilter').value='annual';
   if($('#type')) $('#type').value='all';
   document.querySelectorAll('[data-category]').forEach(x=>x.classList.remove('active'));
-  document.querySelectorAll('[data-range]').forEach(x=>x.className='secondary');
-  $('#quickAnnual').className='primary';
+  resetQuickChoiceV254();
+  $('#quickAnnual').classList.remove('secondary');
+  $('#quickAnnual').classList.add('primary');
   closeControlPopovers();
   nav();
   render();
@@ -1606,12 +1724,33 @@ function enableLocation(setNear=false){
   navigator.geolocation.getCurrentPosition(p=>{
     user={lat:p.coords.latitude,lon:p.coords.longitude};
     $('#locText').textContent=tr('locationOn');
-    if(setNear){$('#radius').value='50';range='all';mode='home';document.querySelectorAll('[data-range]').forEach(x=>x.className='secondary');$('#nearMe').classList.add('active');nav()}
+    if(setNear){$('#radius').value='50';range='all';mode='home';if($('#statusFilter'))$('#statusFilter').value='all';resetQuickChoiceV254();$('#nearMe').classList.remove('secondary');$('#nearMe').classList.add('primary');nav()}
     render()
   },()=>{$('#locText').textContent=tr('locationDenied')})
 }
 $('#locate').onclick=()=>enableLocation(false);
-$('#nearMe').onclick=()=>enableLocation(true);
+$('#nearMe').onclick=()=>{
+  if(user){
+    if($('#statusFilter'))$('#statusFilter').value='all';
+    resetQuickChoiceV254();
+    $('#nearMe').classList.remove('secondary');
+    $('#nearMe').classList.add('primary');
+    $('#radius').value='50';
+    range='all';mode='home';nav();render();
+    return;
+  }
+  const msg=lang==='hr'
+    ?'Za prikaz događaja blizu tebe aplikaciji treba pristup lokaciji. Želiš li uključiti/dopustiti lokaciju?'
+    :lang==='de'
+      ?'Für Veranstaltungen in deiner Nähe benötigt die App Standortzugriff. Standort erlauben?'
+      :lang==='it'
+        ?'Per mostrare gli eventi vicino a te, l’app necessita dell’accesso alla posizione. Consentire?'
+        :'To show events near you, the app needs location access. Allow location?';
+  if(window.confirm(msg)){
+    $('#locText').textContent=lang==='hr'?'Čekam dopuštenje za lokaciju…':tr('locationOff');
+    enableLocation(true);
+  }
+};
 $('#radius').addEventListener('change',()=>$('#nearMe').classList.remove('active'));
 if($('#sortBy')) $('#sortBy').addEventListener('change',render);
 if($('#statusFilter')) $('#statusFilter').addEventListener('change',render);
@@ -1640,6 +1779,8 @@ function togglePopover(id){
 document.querySelectorAll('[data-category]').forEach(btn=>{
   btn.onclick=()=>{
     closeControlPopovers();
+    resetQuickChoiceV254();
+    if($('#statusFilter'))$('#statusFilter').value='all';
     const val=btn.dataset.category;
     const wasActive=btn.classList.contains('active');
     document.querySelectorAll('[data-category]').forEach(x=>x.classList.remove('active'));
